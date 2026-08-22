@@ -1,0 +1,84 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # Services
+    Iperson1337\AssetAssignmentBundle\Service\AssetAssignmentService:
+        public: true
+        arguments:
+            $logger: '@logger'
+            $cache: '@cache.app'
+            $eventDispatcher: '@event_dispatcher'
+
+    Iperson1337\AssetAssignmentBundle\Service\FileGrouper:
+        arguments:
+            $logger: '@logger'
+
+    Iperson1337\AssetAssignmentBundle\Validator\ConfigurationValidator: ~
+
+    Iperson1337\AssetAssignmentBundle\Service\ConfigurationLoader:
+        arguments:
+            $validator: '@Iperson1337\AssetAssignmentBundle\Validator\ConfigurationValidator'
+            $logger: '@logger'
+
+    Iperson1337\AssetAssignmentBundle\Service\DataObjectFinder: ~
+
+    Iperson1337\AssetAssignmentBundle\Service\AttachmentHandler:
+        arguments:
+            $logger: '@logger'
+
+    Iperson1337\AssetAssignmentBundle\Strategy\FileMovementStrategyFactory:
+        arguments:
+            $logger: '@logger'
+
+    # Controllers
+    Iperson1337\AssetAssignmentBundle\Controller\:
+        resource: '../src/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Iperson1337\AssetAssignmentBundle\Controller\AssetAssignmentController:
+        public: true
+        autowire: true
+        tags: ['controller.service_arguments']
+
+    # Commands
+    Iperson1337\AssetAssignmentBundle\Command\:
+        resource: '../src/Command'
+        tags: ['console.command']
+
+    # Messenger Handlers
+    Iperson1337\AssetAssignmentBundle\Messenger\Handler\:
+        resource: '../src/Messenger/Handler'
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.asset-assignment' }
+
+    # Distributed lock for preventing concurrent executions
+    asset_assignment.redis_connection:
+        class: \Redis
+        factory: ['Symfony\Component\Cache\Adapter\RedisAdapter', 'createConnection']
+        arguments:
+            - '%env(REDIS_DSN)%'
+
+    asset_assignment.lock_store:
+        class: Symfony\Component\Lock\Store\RedisStore
+        arguments:
+            - '@asset_assignment.redis_connection'
+
+    asset_assignment.lock_factory:
+        class: Symfony\Component\Lock\LockFactory
+        arguments:
+            - '@asset_assignment.lock_store'
+
+    Iperson1337\AssetAssignmentBundle\Service\ExecutionLockService:
+        arguments:
+            $lockFactory: '@asset_assignment.lock_factory'
+
+    # Monolog logger for asset assignment attachment channel
+    monolog.logger.asset_assignment_attachment:
+        parent: monolog.logger_prototype
+        public: false
+        arguments:
+            $name: 'asset_assignment_attachment'

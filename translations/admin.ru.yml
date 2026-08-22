@@ -1,0 +1,40 @@
+plugin_pimcore_datahub_type_assetAssignment: "Назначение Ресурсов"
+plugin_pimcore_datahub_adapter_assetAssignment: "Адаптер DataHub - Назначение Ресурсов"
+
+plugin_pimcore_asset_assignment_source_folder: "Исходная Папка"
+plugin_pimcore_asset_assignment_target_folder: "Целевая Папка"
+plugin_pimcore_asset_assignment_strategy: "Стратегия"
+plugin_pimcore_asset_assignment_dataobject_class: "Класс DataObject"
+plugin_pimcore_asset_assignment_match_field: "Поле Соответствия"
+plugin_pimcore_asset_assignment_attachment_field: "Поле для Прикрепления"
+
+plugin_pimcore_asset_assignment_strategy_create_folder_and_move: "Создать папку по полю соответствия и переместить"
+plugin_pimcore_asset_assignment_strategy_move_to_target: "Переместить в целевую папку"
+
+plugin_pimcore_asset_assignment_settings: "Настройки Назначения Ресурсов"
+
+plugin_pimcore_asset_assignment_select_field: "Выберите поле..."
+plugin_pimcore_asset_assignment_select_media_field: "Выберите медиа-поле..."
+plugin_pimcore_asset_assignment_select_class: "Выберите класс..."
+plugin_pimcore_asset_assignment_clear_gallery: "Очищать галерею перед добавлением"
+
+plugin_pimcore_asset_assignment_execution: "Выполнение"
+plugin_pimcore_asset_assignment_execution_manual: "Ручной Запуск"
+plugin_pimcore_asset_assignment_execution_status: "Статус Выполнения"
+plugin_pimcore_asset_assignment_execution_start: "Запустить"
+plugin_pimcore_asset_assignment_execution_starting: "Запуск..."
+plugin_pimcore_asset_assignment_execution_success: "Назначение ресурсов успешно запущено."
+plugin_pimcore_asset_assignment_execution_error: "Не удалось запустить назначение ресурсов. Проверьте логи для получения дополнительной информации."
+plugin_pimcore_asset_assignment_execution_not_running: "Все элементы обработаны, выполнение не запущено."
+plugin_pimcore_asset_assignment_execution_current_progress: "Текущий Прогресс"
+plugin_pimcore_asset_assignment_execution_processed: "элементов обработано..."
+plugin_pimcore_asset_assignment_execution_cancel: "Отменить выполнение и очистить"
+plugin_pimcore_asset_assignment_execution_cancel_confirm: "Вы уверены, что хотите отменить текущее выполнение?"
+plugin_pimcore_asset_assignment_execution_cancel_successful: "Выполнение успешно отменено."
+
+# Permission translations (inherited from DataHub)
+plugin_pimcore_datahub_configpanel_permissions: "Права доступа"
+plugin_pimcore_datahub_graphql_permissions_roles: "Роли"
+plugin_pimcore_datahub_graphql_permissions_users: "Пользователи"
+plugin_pimcore_datahub_operator_select_user: "Выберите пользователя"
+plugin_pimcore_datahub_operator_select_role: "Выберите роль"

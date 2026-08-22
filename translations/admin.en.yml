@@ -1,0 +1,40 @@
+plugin_pimcore_datahub_type_assetAssignment: "Asset Assignment"
+plugin_pimcore_datahub_adapter_assetAssignment: "DataHub Adapter - Asset Assignment"
+
+plugin_pimcore_asset_assignment_source_folder: "Source Folder"
+plugin_pimcore_asset_assignment_target_folder: "Target Folder"
+plugin_pimcore_asset_assignment_strategy: "Strategy"
+plugin_pimcore_asset_assignment_dataobject_class: "DataObject Class"
+plugin_pimcore_asset_assignment_match_field: "Match Field"
+plugin_pimcore_asset_assignment_attachment_field: "Attachment Field"
+
+plugin_pimcore_asset_assignment_strategy_create_folder_and_move: "Create folder by match field and move"
+plugin_pimcore_asset_assignment_strategy_move_to_target: "Move to target folder"
+
+plugin_pimcore_asset_assignment_settings: "Asset Assignment Settings"
+
+plugin_pimcore_asset_assignment_select_field: "Select field..."
+plugin_pimcore_asset_assignment_select_media_field: "Select media field..."
+plugin_pimcore_asset_assignment_select_class: "Select class..."
+plugin_pimcore_asset_assignment_clear_gallery: "Clear gallery before assignment"
+
+plugin_pimcore_asset_assignment_execution: "Execution"
+plugin_pimcore_asset_assignment_execution_manual: "Manual Start"
+plugin_pimcore_asset_assignment_execution_status: "Execution Status"
+plugin_pimcore_asset_assignment_execution_start: "Start"
+plugin_pimcore_asset_assignment_execution_starting: "Starting..."
+plugin_pimcore_asset_assignment_execution_success: "Asset assignment started successfully."
+plugin_pimcore_asset_assignment_execution_error: "Failed to start asset assignment. Check logs for more information."
+plugin_pimcore_asset_assignment_execution_not_running: "All items processed, execution not started."
+plugin_pimcore_asset_assignment_execution_current_progress: "Current Progress"
+plugin_pimcore_asset_assignment_execution_processed: "items processed..."
+plugin_pimcore_asset_assignment_execution_cancel: "Cancel execution and clear"
+plugin_pimcore_asset_assignment_execution_cancel_confirm: "Are you sure you want to cancel current execution?"
+plugin_pimcore_asset_assignment_execution_cancel_successful: "Execution cancelled successfully."
+
+# Permission translations (inherited from DataHub)
+plugin_pimcore_datahub_configpanel_permissions: "Permissions"
+plugin_pimcore_datahub_graphql_permissions_roles: "Roles"
+plugin_pimcore_datahub_graphql_permissions_users: "Users"
+plugin_pimcore_datahub_operator_select_user: "Select User"
+plugin_pimcore_datahub_operator_select_role: "Select Role"

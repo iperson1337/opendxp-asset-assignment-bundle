@@ -1,0 +1,10 @@
+/* Icons for Asset Assignment (Data Hub adapter + Admin UI) */
+
+/* Data Hub adapter/icon class follows Data Hub convention: plugin_pimcore_datahub_icon_<type> */
+.plugin_pimcore_datahub_icon_assetAssignment {
+    width: 24px;
+    height: 24px;
+    background: transparent url('/bundles/assetassignment/img/assetAssignment.svg') center center no-repeat;
+    background-size: 24px 24px; /* crisp scaling */
+    display: inline-block;
+}

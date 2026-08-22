@@ -1,0 +1,35 @@
+{
+    "name": "iperson1337/opendxp-asset-assignment-bundle",
+    "type": "opendxp-bundle",
+    "description": "Asset Assignment Bundle for OpenDXP — scans a source folder, matches files to DataObjects by a configurable field, moves/attaches them",
+    "license": "MIT",
+    "config": {
+        "sort-packages": true,
+        "preferred-install": {
+            "open-dxp/opendxp": "source",
+            "*": "dist"
+        },
+        "allow-plugins": {
+            "symfony/runtime": true
+        }
+    },
+    "require": {
+        "php": ">=8.1",
+        "open-dxp/opendxp": "^1.0",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/lock": "^7.4",
+        "symfony/cache": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Iperson1337\\AssetAssignmentBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "opendxp": {
+            "bundles": [
+                "Iperson1337\\AssetAssignmentBundle\\AssetAssignmentBundle"
+            ]
+        }
+    }
+}

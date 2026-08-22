@@ -1,0 +1,15 @@
+# Tests directory structure for Asset Assignment Bundle
+#
+# Future structure:
+# tests/
+# ├── Unit/
+# │   ├── Service/
+# │   │   ├── AssetAssignmentServiceTest.php
+# │   │   └── AttachmentHandlerTest.php
+# │   └── Strategy/
+# │       ├── CreateFolderAndMoveStrategyTest.php
+# │       └── MoveToTargetStrategyTest.php
+# └── Functional/
+#     └── Controller/
+#         └── AssetAssignmentControllerTest.php
+

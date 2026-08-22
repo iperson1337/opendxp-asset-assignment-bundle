@@ -1,0 +1,6 @@
+_asset_assignment_admin:
+    resource: "../../src/Controller/AssetAssignmentController.php"
+    type: attribute
+    options:
+        expose: true
+

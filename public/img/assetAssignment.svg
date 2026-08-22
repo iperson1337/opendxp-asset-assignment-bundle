@@ -1,0 +1,17 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     width="24px" height="24px" viewBox="0 0 24 24" xml:space="preserve">
+<path fill="none" d="M0,0h24v24H0V0z"/>
+
+<!-- Asset icon (orange image with folder) -->
+<path fill="#F07828" d="M16,4H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2v-8L16,4z"/>
+<polygon fill="#F7B681" points="16,4 16,10 22,10 "/>
+<path fill="#FFFFFF" d="M11,15.5l-2.5-3L5,17h14l-4.5-6L11,15.5z"/>
+
+<!-- Data Object (3D cube - scaled down 50%, positioned bottom right) -->
+<g transform="translate(12, 12) scale(0.5)">
+  <path fill="#AF89DA" d="M12,21.8l8.8-14.7c-0.1-0.2-0.3-0.4-0.5-0.5l-7.6-4.2c-0.4-0.2-0.9-0.2-1.4,0L3.7,6.6
+      C3.5,6.7,3.3,6.9,3.2,7.1L12,21.8z"/>
+  <path fill="#8C5BC9" d="M3.2,7.1C3.1,7.3,3,7.6,3,7.8v8.4c0,0.5,0.3,1,0.7,1.2l7.6,4.2c0.2,0.1,0.4,0.2,0.7,0.2V12L3.2,7.1z"/>
+  <path fill="#6428B4" d="M20.8,7.1C20.9,7.3,21,7.6,21,7.8v8.4c0,0.5-0.3,1-0.7,1.2l-7.6,4.2c-0.2,0.1-0.4,0.2-0.7,0.2V12L20.8,7.1z"/>
+</g>
+</svg>
