@@ -10,7 +10,7 @@ opendxp.plugin.datahub.adapter.assetAssignment = Class.create(opendxp.plugin.dat
         }
 
         Ext.Ajax.request({
-            url: '/admin/pimcoredatahub/config/get',
+            url: '/admin/opendxpdatahub/config/get',
             params: {
                 name: id
             },

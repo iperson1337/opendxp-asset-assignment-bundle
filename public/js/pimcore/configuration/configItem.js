@@ -530,7 +530,7 @@ opendxp.plugin.datahub.configuration.assetAssignment.configItem = Class.create(o
         var saveData = this.getSaveData();
 
         Ext.Ajax.request({
-            url: '/admin/pimcoredatahub/config/save',
+            url: '/admin/opendxpdatahub/config/save',
             method: 'POST',
             params: {
                 data: saveData,
