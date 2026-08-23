@@ -7,4 +7,8 @@
     background: transparent url('/bundles/assetassignment/img/assetAssignment.svg') center center no-repeat;
     background-size: 24px 24px; /* crisp scaling */
     display: inline-block;
+    /* base .x-tree-icon rule assumes a 32px-tall icon box and sets margin-top:-7px to
+       center it; our box is 24px tall, so the same -7px sits 4px too high — compensate
+       by 4px so the icon lines up with the tree row's label text. */
+    margin-top: -3px;
 }
