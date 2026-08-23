@@ -1,5 +1,5 @@
-plugin_pimcore_datahub_type_assetAssignment: "Asset Assignment"
-plugin_pimcore_datahub_adapter_assetAssignment: "DataHub Adapter - Asset Assignment"
+plugin_opendxp_datahub_type_assetAssignment: "Asset Assignment"
+plugin_opendxp_datahub_adapter_assetAssignment: "DataHub Adapter - Asset Assignment"
 
 plugin_pimcore_asset_assignment_source_folder: "Source Folder"
 plugin_pimcore_asset_assignment_target_folder: "Target Folder"
@@ -33,8 +33,9 @@ plugin_pimcore_asset_assignment_execution_cancel_confirm: "Are you sure you want
 plugin_pimcore_asset_assignment_execution_cancel_successful: "Execution cancelled successfully."
 
 # Permission translations (inherited from DataHub)
-plugin_pimcore_datahub_configpanel_permissions: "Permissions"
-plugin_pimcore_datahub_graphql_permissions_roles: "Roles"
-plugin_pimcore_datahub_graphql_permissions_users: "Users"
-plugin_pimcore_datahub_operator_select_user: "Select User"
-plugin_pimcore_datahub_operator_select_role: "Select Role"
+plugin_opendxp_datahub_configpanel_item_general: "General"
+plugin_opendxp_datahub_configpanel_permissions: "Permissions"
+plugin_opendxp_datahub_graphql_permissions_roles: "Roles"
+plugin_opendxp_datahub_graphql_permissions_users: "Users"
+plugin_opendxp_datahub_operator_select_user: "Select User"
+plugin_opendxp_datahub_operator_select_role: "Select Role"

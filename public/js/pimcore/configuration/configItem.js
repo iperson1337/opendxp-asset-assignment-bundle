@@ -28,10 +28,10 @@ opendxp.plugin.datahub.configuration.assetAssignment.configItem = Class.create(o
             closable: true,
             deferredRender: true,
             forceLayout: true,
-            iconCls: "plugin_pimcore_datahub_icon_assetAssignment",
-            id: "plugin_pimcore_datahub_configpanel_panel_" + data.name,
+            iconCls: "plugin_opendxp_datahub_icon_assetAssignment",
+            id: "plugin_opendxp_datahub_configpanel_panel_" + data.name,
             buttons: {
-                componentCls: 'plugin_pimcore_datahub_statusbar',
+                componentCls: 'plugin_opendxp_datahub_statusbar',
                 itemId: 'footer'
             }
         });
@@ -80,7 +80,7 @@ opendxp.plugin.datahub.configuration.assetAssignment.configItem = Class.create(o
         var cfg = this.data;
         
         this.generalForm = new Ext.form.FormPanel({
-            title: t('plugin_pimcore_datahub_configpanel_item_general'),
+            title: t('plugin_opendxp_datahub_configpanel_item_general'),
             bodyStyle: 'padding:10px;',
             labelWidth: 200,
             autoScroll: true,
@@ -101,7 +101,7 @@ opendxp.plugin.datahub.configuration.assetAssignment.configItem = Class.create(o
                     xtype: 'textfield',
                     fieldLabel: t('type'),
                     name: 'type',
-                    value: t('plugin_pimcore_datahub_type_assetAssignment'),
+                    value: t('plugin_opendxp_datahub_type_assetAssignment'),
                     readOnly: true
                 },
                 {
@@ -542,7 +542,7 @@ opendxp.plugin.datahub.configuration.assetAssignment.configItem = Class.create(o
                     this.modificationDate = d.modificationDate;
                     opendxp.helpers.showNotification(t('success'), t('saved_successfully'), 'success');
                 } else if (d && d.permissionError) {
-                    opendxp.helpers.showNotification(t("error"), t("plugin_pimcore_datahub_configpanel_item_saveerror_permissions"), "error");
+                    opendxp.helpers.showNotification(t("error"), t("plugin_opendxp_datahub_configpanel_item_saveerror_permissions"), "error");
                     this.tab.setActiveTab(this.tab.items.length-1);
                 } else {
                     Ext.Msg.alert(t('error'), d && d.message ? d.message : 'Save failed');

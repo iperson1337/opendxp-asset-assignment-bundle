@@ -3,7 +3,7 @@ opendxp.registerNS("opendxp.plugin.datahub.adapter.assetAssignment");
 opendxp.plugin.datahub.adapter.assetAssignment = Class.create(opendxp.plugin.datahub.adapter.abstract, {
     
     openConfiguration: function (id) {
-        var existingPanel = Ext.getCmp("plugin_pimcore_datahub_configpanel_panel_" + id);
+        var existingPanel = Ext.getCmp("plugin_opendxp_datahub_configpanel_panel_" + id);
         if (existingPanel) {
             this.configPanel.editPanel.setActiveTab(existingPanel);
             return;

@@ -1,5 +1,5 @@
-plugin_pimcore_datahub_type_assetAssignment: "Назначение Ресурсов"
-plugin_pimcore_datahub_adapter_assetAssignment: "Адаптер DataHub - Назначение Ресурсов"
+plugin_opendxp_datahub_type_assetAssignment: "Назначение Ресурсов"
+plugin_opendxp_datahub_adapter_assetAssignment: "Адаптер DataHub - Назначение Ресурсов"
 
 plugin_pimcore_asset_assignment_source_folder: "Исходная Папка"
 plugin_pimcore_asset_assignment_target_folder: "Целевая Папка"
@@ -33,8 +33,9 @@ plugin_pimcore_asset_assignment_execution_cancel_confirm: "Вы уверены, 
 plugin_pimcore_asset_assignment_execution_cancel_successful: "Выполнение успешно отменено."
 
 # Permission translations (inherited from DataHub)
-plugin_pimcore_datahub_configpanel_permissions: "Права доступа"
-plugin_pimcore_datahub_graphql_permissions_roles: "Роли"
-plugin_pimcore_datahub_graphql_permissions_users: "Пользователи"
-plugin_pimcore_datahub_operator_select_user: "Выберите пользователя"
-plugin_pimcore_datahub_operator_select_role: "Выберите роль"
+plugin_opendxp_datahub_configpanel_item_general: "Общие"
+plugin_opendxp_datahub_configpanel_permissions: "Права доступа"
+plugin_opendxp_datahub_graphql_permissions_roles: "Роли"
+plugin_opendxp_datahub_graphql_permissions_users: "Пользователи"
+plugin_opendxp_datahub_operator_select_user: "Выберите пользователя"
+plugin_opendxp_datahub_operator_select_role: "Выберите роль"
