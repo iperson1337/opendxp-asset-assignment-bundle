@@ -9,8 +9,11 @@ services:
         public: true
         arguments:
             $logger: '@logger'
-            $cache: '@cache.app'
+            # $cache — пул из iperson1337_asset_assignment.progress_cache_pool (AssetAssignmentExtension)
             $eventDispatcher: '@event_dispatcher'
+
+    # Прогресс в индикаторе «Идёт выполнение» Data Hub; $cache — тот же пул, что у сервиса
+    Iperson1337\AssetAssignmentBundle\Service\RunningAssetAssignmentProvider: ~
 
     Iperson1337\AssetAssignmentBundle\Service\FileGrouper:
         arguments:

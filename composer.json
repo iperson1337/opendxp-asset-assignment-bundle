@@ -16,6 +16,7 @@
     "require": {
         "php": ">=8.1",
         "open-dxp/opendxp": "^1.0",
+        "iperson1337/opendxp-data-hub": "^1.2",
         "symfony/framework-bundle": "^7.4",
         "symfony/lock": "^7.4",
         "symfony/cache": "^7.4"
