@@ -8,23 +8,55 @@ use Iperson1337\AssetAssignmentBundle\Exception\FolderNotFoundException;
 use Iperson1337\AssetAssignmentBundle\Message\AssetAssignmentMessage;
 use Iperson1337\AssetAssignmentBundle\Service\AssetAssignmentService;
 use Iperson1337\AssetAssignmentBundle\Service\ExecutionLockService;
+use OpenDxp\Bundle\DataHubBundle\Configuration;
+use OpenDxp\Controller\KernelControllerEventInterface;
 use OpenDxp\Controller\UserAwareController;
 use OpenDxp\Model\DataObject\ClassDefinition;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/admin/asset-assignment')]
-final class AssetAssignmentController extends UserAwareController
+final class AssetAssignmentController extends UserAwareController implements KernelControllerEventInterface
 {
+    public const PERMISSION = 'plugin_datahub_config';
+
     public function __construct(
         protected AssetAssignmentService $assetAssignmentService,
         protected MessageBusInterface $messageBus,
         protected LoggerInterface $logger,
         protected ExecutionLockService $executionLockService,
     ) {
+    }
+
+    /**
+     * Права для всех экшенов контроллера разом: право `plugin_datahub_config` и право чтения
+     * конфигурации, названной в запросе, — как при открытии её в Data Hub. Имя проверяется и из
+     * тела, и из строки запроса: экшены читают его из разных мест.
+     */
+    public function onKernelControllerEvent(ControllerEvent $event): void
+    {
+        if (!$event->isMainRequest()) {
+            return;
+        }
+
+        $this->checkPermission(self::PERMISSION);
+
+        $request = $event->getRequest();
+        foreach ([$request->request->get('config_name'), $request->query->get('config_name')] as $configName) {
+            if (!is_string($configName) || $configName === '') {
+                continue;
+            }
+
+            $configuration = Configuration::getByName($configName);
+            if ($configuration !== null && !$configuration->isAllowed('read')) {
+                throw new AccessDeniedHttpException(sprintf('No read permission for configuration `%s`', $configName));
+            }
+        }
     }
 
     #[Route('/start-execution', methods: ['POST'], options: ['expose' => true])]
