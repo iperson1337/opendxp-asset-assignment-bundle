@@ -6,6 +6,15 @@ opendxp.plugin.assetAssignment.configuration.execution = Class.create({
     data: {},
     configItemRootContainer: null,
     updateHandle: null,
+    // Опрашиваем сервер только пока идёт выполнение: простаивающая вкладка Data Hub
+    // не должна слать запросы. Статус перечитывается при открытии панели и возврате на вкладку.
+    running: false,
+    // После «Старт» воркер не сразу отмечает выполнение (сначала группирует файлы) —
+    // до этого момента опрашиваем, иначе прогресс не появится.
+    awaitingStartUntil: 0,
+    destroyed: false,
+    visibilityHandler: null,
+    runningExecutionsListener: null,
 
     initialize: function(configName, data, configItemRootContainer) {
         this.configName = configName;
@@ -64,6 +73,10 @@ opendxp.plugin.assetAssignment.configuration.execution = Class.create({
                 defaults: {
                     labelWidth: 200
                 },
+                listeners: {
+                    activate: this.updateProgress.bind(this),
+                    destroy: this.destroy.bind(this)
+                },
                 items: [
                     {
                         xtype: 'fieldset',
@@ -86,7 +99,15 @@ opendxp.plugin.assetAssignment.configuration.execution = Class.create({
                 ]
             });
 
-            // Start progress monitoring
+            this.visibilityHandler = function () {
+                if (!document.hidden && (this.running || this.isAwaitingStart())) {
+                    this.updateProgress();
+                }
+            }.bind(this);
+            document.addEventListener('visibilitychange', this.visibilityHandler);
+            this.subscribeToRunningExecutions();
+
+            // Initial status check; further polling only while running
             this.updateProgress();
         }
 
@@ -110,6 +131,7 @@ opendxp.plugin.assetAssignment.configuration.execution = Class.create({
                 this.buttonFieldContainer.down('button').setDisabled(false);
 
                 if (data.success) {
+                    this.awaitingStartUntil = Date.now() + 120000;
                     opendxp.helpers.showNotification(
                         t('success'),
                         t('plugin_pimcore_asset_assignment_execution_success'),
@@ -137,9 +159,55 @@ opendxp.plugin.assetAssignment.configuration.execution = Class.create({
         });
     },
 
+    getRunningExecutionsEvent: function() {
+        var config = opendxp.plugin.datahub && opendxp.plugin.datahub.config;
+        return (config && config.prototype.runningExecutionsEvent) || 'opendxp.datahub.runningExecutions';
+    },
+
+    /**
+     * Индикатор «Идёт выполнение» Data Hub и так опрашивает сервер (только при видимой панели).
+     * Если он видит прогон этого конфига (запущен из другой вкладки или другим пользователем),
+     * а панель простаивает — включаем свой подробный опрос.
+     */
+    subscribeToRunningExecutions: function() {
+        var settings = opendxp.settings['data-hub-running-executions'];
+        if (!settings || !settings.enabled) {
+            return;
+        }
+
+        this.runningExecutionsListener = function(event) {
+            var items = (event.detail && event.detail.items) || [];
+            var isListed = items.some(function(item) {
+                return item.name === this.configName;
+            }.bind(this));
+
+            if (isListed && !this.running && !this.updateHandle) {
+                this.updateProgress();
+            }
+        }.bind(this);
+        document.addEventListener(this.getRunningExecutionsEvent(), this.runningExecutionsListener);
+    },
+
+    isAwaitingStart: function() {
+        return Date.now() < this.awaitingStartUntil;
+    },
+
+    scheduleNextUpdate: function(delay) {
+        // Hidden browser tab: no polling, visibilityHandler resumes it
+        if (this.destroyed || document.hidden) {
+            return;
+        }
+        this.updateHandle = setTimeout(this.updateProgress.bind(this), delay);
+    },
+
     updateProgress: function() {
         clearTimeout(this.updateHandle);
-        
+        this.updateHandle = null;
+
+        if (this.destroyed) {
+            return;
+        }
+
         Ext.Ajax.request({
             url: Routing.generate('iperson1337_assetassignment_assetassignment_checkexecutionprogress'),
             method: 'GET',
@@ -147,7 +215,15 @@ opendxp.plugin.assetAssignment.configuration.execution = Class.create({
                 config_name: this.configName
             },
             success: function(response) {
+                if (this.destroyed) {
+                    return;
+                }
+
                 var data = Ext.decode(response.responseText);
+                this.running = !!data.isRunning;
+                if (this.running) {
+                    this.awaitingStartUntil = 0;
+                }
 
                 if (data.isRunning) {
                     this.progressBar.show();
@@ -167,8 +243,7 @@ opendxp.plugin.assetAssignment.configuration.execution = Class.create({
                     this.progressBar.updateProgress(data.progress, progressText);
                     this.progressLabel.setHtml(t('plugin_pimcore_asset_assignment_execution_current_progress'));
                     
-                    // Poll more frequently when running (every 1 second for real-time updates)
-                    this.updateHandle = setTimeout(this.updateProgress.bind(this), 1000);
+                    this.scheduleNextUpdate(1000);
                 } else {
                     this.progressBar.hide();
                     this.cancelButtonContainer.hide();
@@ -178,15 +253,18 @@ opendxp.plugin.assetAssignment.configuration.execution = Class.create({
                     this.buttonFieldContainer.down('button').setText(t('plugin_pimcore_asset_assignment_execution_start'));
                     
                     this.progressLabel.setHtml('<b>' + t('plugin_pimcore_asset_assignment_execution_not_running') + '</b>');
-                    
-                    // Poll less frequently when not running (every 5 seconds)
-                    this.updateHandle = setTimeout(this.updateProgress.bind(this), 5000);
+
+                    if (this.isAwaitingStart()) {
+                        this.scheduleNextUpdate(2000);
+                    }
                 }
 
             }.bind(this),
             failure: function() {
-                // Retry on failure
-                this.updateHandle = setTimeout(this.updateProgress.bind(this), 5000);
+                // Retry only while an execution is being watched
+                if (this.running || this.isAwaitingStart()) {
+                    this.scheduleNextUpdate(5000);
+                }
             }.bind(this)
         });
     },
@@ -237,9 +315,20 @@ opendxp.plugin.assetAssignment.configuration.execution = Class.create({
     },
 
     destroy: function() {
-        // Clear update interval when panel is destroyed
-        if (this.updateHandle) {
-            clearTimeout(this.updateHandle);
+        this.destroyed = true;
+        this.running = false;
+        this.awaitingStartUntil = 0;
+        clearTimeout(this.updateHandle);
+        this.updateHandle = null;
+
+        if (this.visibilityHandler) {
+            document.removeEventListener('visibilitychange', this.visibilityHandler);
+            this.visibilityHandler = null;
+        }
+
+        if (this.runningExecutionsListener) {
+            document.removeEventListener(this.getRunningExecutionsEvent(), this.runningExecutionsListener);
+            this.runningExecutionsListener = null;
         }
     }
 });

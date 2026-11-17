@@ -69,7 +69,10 @@ opendxp.plugin.datahub.configuration.assetAssignment.configItem = Class.create(o
     },
 
     tabactivated: function () {
-        // Empty implementation, can be extended if needed
+        // Re-read execution status when returning to the config tab
+        if (this.executionPanel) {
+            this.executionPanel.updateProgress();
+        }
     },
 
     tabdestroy: function () {
